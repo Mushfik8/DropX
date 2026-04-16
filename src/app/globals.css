@@ -1,20 +1,20 @@
 @import "tailwindcss";
 
 @theme inline {
-  --color-background: #111318;
+  --color-background: #0F172A;
   --color-foreground: #F8FAFC;
-  
+
   --color-primary: #facc15;
   --color-primary-hover: #eab308;
-  
-  --color-card: #1c2025;
-  --color-card-border: #2b2f36;
-  
+
+  --color-success: #22C55E;
+  --color-warning: #F59E0B;
+
+  --color-card: #1E293B;
+  --color-card-border: #334155;
+
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
-  
-  --radius-card: 16px;
-  --radius-btn: 12px;
 }
 
 :root {
@@ -25,4 +25,9 @@ body {
   background-color: var(--color-background);
   color: var(--color-foreground);
   font-family: var(--font-sans), sans-serif;
+}
+
+/* Smooth scrolling for anchor links */
+html {
+  scroll-behavior: smooth;
 }

@@ -9,11 +9,11 @@ export type Task = {
   title: string;
   description: string;
   points: number;
-  type: string;       // daily | web3 | social | onchain
-  category: string;   // Quick | Social | On-chain | Referrals
+  type: string;
+  category: string;
   status: 'pending' | 'completed';
-  link?: string;      // External URL to open on "Start"
-  frequency: string;  // One-time | Per referral | Daily
+  link?: string;
+  frequency: string;
 };
 
 export type Activity = {
@@ -38,55 +38,55 @@ const AppContext = createContext<AppContextType | undefined>(undefined);
 
 const defaultTasks: Task[] = [
   {
-    id: 1, title: 'Daily check-in',
-    description: 'Check in daily to earn XP and build your streak. Complete consecutive days to unlock bonus rewards.',
-    points: 10, type: 'daily', category: 'Quick', status: 'pending',
-    frequency: 'Daily',
-  },
-  {
-    id: 2, title: 'Connect wallet',
-    description: 'Link your Web3 wallet to receive $AIRDROP tokens.',
-    points: 15, type: 'web3', category: 'On-chain', status: 'pending',
+    id: 1, title: 'Follow Twitter',
+    description: 'Follow ZyroX official Twitter account.',
+    points: 50, type: 'social', category: 'Social', status: 'pending',
+    link: 'https://x.com/ZyroX',
     frequency: 'One-time',
   },
   {
-    id: 3, title: 'Follow on X (Twitter)',
-    description: 'Follow @Airdropia on X to stay updated with the latest announcements.',
-    points: 20, type: 'social', category: 'Social', status: 'pending',
-    link: 'https://x.com/LuminaWeb3',
+    id: 2, title: 'Join Telegram',
+    description: 'Join ZyroX Telegram community.',
+    points: 40, type: 'social', category: 'Social', status: 'pending',
+    link: 'https://t.me/ZyroX',
     frequency: 'One-time',
   },
   {
-    id: 4, title: 'Like on X (Twitter)',
-    description: 'Like our pinned post on X to earn XP.',
-    points: 5, type: 'social', category: 'Social', status: 'pending',
-    link: 'https://x.com/LuminaWeb3',
+    id: 3, title: 'Visit Website',
+    description: 'Visit ZyroX homepage and explore.',
+    points: 20, type: 'social', category: 'Quick', status: 'pending',
+    link: '/',
     frequency: 'One-time',
   },
   {
-    id: 5, title: 'Join Telegram',
-    description: 'Join the official Airdropia Telegram community group.',
-    points: 25, type: 'social', category: 'Social', status: 'pending',
-    link: 'https://t.me/LuminaWeb3',
-    frequency: 'One-time',
-  },
-  {
-    id: 6, title: 'Refer a friend',
-    description: 'Invite friends and earn when they complete signup.',
+    id: 4, title: 'Invite Friends',
+    description: 'Refer friends and earn rewards.',
     points: 100, type: 'social', category: 'Referrals', status: 'pending',
     frequency: 'Per referral',
   },
   {
-    id: 7, title: 'Retweet announcement',
-    description: 'Retweet the latest announcement from our X account.',
-    points: 10, type: 'social', category: 'Social', status: 'pending',
-    link: 'https://x.com/LuminaWeb3',
+    id: 5, title: 'Connect Wallet',
+    description: 'Link your Web3 wallet to receive $ZYX tokens.',
+    points: 30, type: 'web3', category: 'On-chain', status: 'pending',
+    frequency: 'One-time',
+  },
+  {
+    id: 6, title: 'Daily Check-in',
+    description: 'Check in daily to earn XP and build your streak.',
+    points: 10, type: 'daily', category: 'Quick', status: 'pending',
+    frequency: 'Daily',
+  },
+  {
+    id: 7, title: 'Retweet Announcement',
+    description: 'Retweet our latest announcement on X.',
+    points: 25, type: 'social', category: 'Social', status: 'pending',
+    link: 'https://x.com/ZyroX',
     frequency: 'One-time',
   },
 ];
 
 const defaultActivity: Activity[] = [
-  { id: 101, action: 'Account Created', detail: 'Welcome to Airdropia!', amount: '+0 XP', time: 'Just now' },
+  { id: 101, action: 'Account Created', detail: 'Welcome to ZyroX!', amount: '+0 XP', time: 'Just now' },
 ];
 
 export function AppProvider({ children }: { children: ReactNode }) {
@@ -99,15 +99,14 @@ export function AppProvider({ children }: { children: ReactNode }) {
   // Load from localStorage on mount
   useEffect(() => {
     try {
-      const savedPoints = localStorage.getItem('lumina_points');
-      const savedTasks = localStorage.getItem('lumina_tasks_v2');
-      const savedActivity = localStorage.getItem('lumina_activity');
-      const savedWallet = localStorage.getItem('lumina_wallet');
+      const savedPoints = localStorage.getItem('zyrox_points');
+      const savedTasks = localStorage.getItem('zyrox_tasks_v3');
+      const savedActivity = localStorage.getItem('zyrox_activity');
+      const savedWallet = localStorage.getItem('zyrox_wallet');
 
       if (savedPoints) setPoints(parseInt(savedPoints));
       if (savedTasks) {
         const parsed = JSON.parse(savedTasks);
-        // Only use saved tasks if they have the new fields
         if (parsed.length > 0 && 'category' in parsed[0]) {
           setTasks(parsed);
         } else {
@@ -119,7 +118,6 @@ export function AppProvider({ children }: { children: ReactNode }) {
       if (savedActivity) setRecentActivity(JSON.parse(savedActivity));
       if (savedWallet) setWalletAddress(savedWallet);
     } catch {
-      // If anything fails, reset to defaults
       setTasks(defaultTasks);
     }
 
@@ -129,13 +127,13 @@ export function AppProvider({ children }: { children: ReactNode }) {
   // Save to localStorage when state changes
   useEffect(() => {
     if (isInitialized) {
-      localStorage.setItem('lumina_points', points.toString());
-      localStorage.setItem('lumina_tasks_v2', JSON.stringify(tasks));
-      localStorage.setItem('lumina_activity', JSON.stringify(recentActivity));
+      localStorage.setItem('zyrox_points', points.toString());
+      localStorage.setItem('zyrox_tasks_v3', JSON.stringify(tasks));
+      localStorage.setItem('zyrox_activity', JSON.stringify(recentActivity));
       if (walletAddress) {
-        localStorage.setItem('lumina_wallet', walletAddress);
+        localStorage.setItem('zyrox_wallet', walletAddress);
       } else {
-        localStorage.removeItem('lumina_wallet');
+        localStorage.removeItem('zyrox_wallet');
       }
     }
   }, [points, tasks, recentActivity, walletAddress, isInitialized]);
@@ -145,8 +143,8 @@ export function AppProvider({ children }: { children: ReactNode }) {
       const task = prev.find(t => t.id === taskId);
       if (!task || task.status === 'completed') return prev;
 
-      // Open external link if the task has one
-      if (task.link) {
+      // Open external link if the task has one (skip "/" homepage links)
+      if (task.link && task.link !== '/') {
         window.open(task.link, '_blank', 'noopener,noreferrer');
       }
 
@@ -163,7 +161,6 @@ export function AppProvider({ children }: { children: ReactNode }) {
       };
       setRecentActivity(act => [newActivity, ...act].slice(0, 10));
 
-      // Return updated tasks
       return prev.map(t =>
         t.id === taskId ? { ...t, status: 'completed' as const } : t
       );

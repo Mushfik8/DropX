@@ -15,8 +15,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Airdropia",
-  description: "Web3 Reward & Airdrop Dashboard",
+  title: "ZyroX — Earn Rewards in Web3",
+  description: "ZyroX is a Web3 reward platform where users complete tasks and earn crypto rewards.",
 };
 
 export default function RootLayout({
@@ -33,10 +33,8 @@ export default function RootLayout({
       <body className="min-h-full flex flex-col bg-background text-foreground" suppressHydrationWarning>
         <AppProvider>
           <Navbar />
-          <main className="flex-1 w-full flex justify-center">
-            <div className="w-full max-w-7xl">
-              {children}
-            </div>
+          <main className="flex-1 w-full">
+            {children}
           </main>
         </AppProvider>
       </body>
