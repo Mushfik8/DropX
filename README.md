@@ -1,36 +1,101 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Lumina (Web3 Reward Dashboard)
 
-## Getting Started
+Lumina is a highly responsive, modern Web3 reward dashboard MVP. The project replicates precise UI mechanics for loyalty and points distribution in the Web3 space. 
 
-First, run the development server:
+It is currently running entirely on **Mock LocalStorage State** to provide an instant, zero-configuration local demo. This document outlines how to replace the mock state with a live Database (e.g., Supabase) and real API endpoints.
 
+## Tech Stack
+* **Framework**: Next.js 15 (App Router)
+* **Styling**: Tailwind CSS v4 (Custom Dark/Yellow palette)
+* **Web3 Integration**: Ethers.js
+* **State Management**: React Context (`AppContext.tsx`) + LocalStorage
+
+## How to Run Locally
+
+1. Install dependencies:
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+npm install
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+2. Run the development server:
+```bash
+npm run dev
+```
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+3. Open [http://localhost:3000](http://localhost:3000)
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Connecting a Database (Supabase Guide)
 
-## Learn More
+Right now, tasks, users, and XP are managed in `src/context/AppContext.tsx`. To connect a real backend:
 
-To learn more about Next.js, take a look at the following resources:
+### 1. Setup Supabase
+Create a free project at [Supabase.com](https://supabase.com). 
+Run the following SQL to set up your tables:
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+```sql
+CREATE TABLE users (
+  wallet_address text PRIMARY KEY,
+  xp_balance integer DEFAULT 0,
+  created_at timestamp DEFAULT now()
+);
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+CREATE TABLE tasks (
+  id serial PRIMARY KEY,
+  title text NOT NULL,
+  description text,
+  points integer NOT NULL,
+  type text NOT NULL
+);
 
-## Deploy on Vercel
+CREATE TABLE user_tasks (
+  id serial PRIMARY KEY,
+  wallet_address text REFERENCES users(wallet_address),
+  task_id integer REFERENCES tasks(id),
+  completed_at timestamp DEFAULT now()
+);
+```
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+### 2. Configure Environment Variables
+Create a `.env.local` file at the root of the project:
+```env
+NEXT_PUBLIC_SUPABASE_URL=your-supabase-url
+NEXT_PUBLIC_SUPABASE_ANON_KEY=your-supabase-anon-key
+```
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+### 3. Refactor AppContext.tsx
+Inside `src/context/AppContext.tsx`, replace the `localStorage` logic with Supabase client calls.
+
+**Example Fetching Database Tasks instead of Default Tasks:**
+```typescript
+import { createClient } from '@supabase/supabase-js';
+
+const supabase = createClient(
+  process.env.NEXT_PUBLIC_SUPABASE_URL!,
+  process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
+);
+
+// inside useEffect:
+const loadTasks = async () => {
+  const { data, error } = await supabase.from('tasks').select('*');
+  if (data) setTasks(data);
+};
+```
+
+**Example Updating XP:**
+```typescript
+const completeTask = async (taskId: number) => {
+  if (!walletAddress) return;
+  // 1. Write the completion to Supabase
+  await supabase.from('user_tasks').insert({ wallet_address: walletAddress, task_id: taskId });
+  
+  // 2. Refresh local state
+  // ... update local React Context as usual to keep UI snappy
+};
+```
+
+## Adding More Web3 Integrations
+Currently, `connectWallet` uses a generic `BrowserProvider` from Ethers v6. 
+If you want to read token balances (e.g., `$LUMI` token on BSC):
+1. Import the ABI array for an ERC20 Token.
+2. Initialize a local Contract inside `AppContext.tsx`.
+3. Call `await contract.balanceOf(address)`.
