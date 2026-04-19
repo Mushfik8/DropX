@@ -52,7 +52,7 @@ export default function AdminPage() {
           <div className="bg-card border border-card-border rounded-2xl p-8">
             <div className="text-center mb-8">
               <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center text-3xl mx-auto mb-4">🔒</div>
-              <h1 className="text-2xl font-extrabold text-white">ZyroX Admin</h1>
+              <h1 className="text-2xl font-extrabold text-white">DropX Admin</h1>
               <p className="text-foreground/50 text-sm mt-1">Enter your credentials to continue</p>
             </div>
             <form onSubmit={handleLogin} className="space-y-4">
@@ -85,7 +85,7 @@ export default function AdminPage() {
       <div className="max-w-4xl mx-auto space-y-8">
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
           <div>
-            <h1 className="text-3xl font-bold mb-1 text-white">ZyroX Admin</h1>
+            <h1 className="text-3xl font-bold mb-1 text-white">DropX Admin</h1>
             <p className="text-foreground/50 text-sm">Logged in as <span className="text-primary font-bold">{ADMIN_USERNAME}</span></p>
           </div>
           <div className="flex gap-3">

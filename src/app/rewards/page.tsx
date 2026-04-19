@@ -57,7 +57,7 @@ export default function RewardsPage() {
       <div className="space-y-6">
         <div>
           <h1 className="text-4xl font-extrabold mb-2">Rewards</h1>
-          <p className="text-foreground/60 text-lg">Earn XP by completing tasks. Climb tiers and unlock $ZYX airdrops.</p>
+          <p className="text-foreground/60 text-lg">Earn XP by completing tasks. Climb tiers and unlock $DPX airdrops.</p>
         </div>
 
         {/* Tier & XP display */}
@@ -115,8 +115,8 @@ export default function RewardsPage() {
 
             {/* Streak */}
             <div className="mt-8 mb-6 overflow-x-auto pb-2">
-              <div className="flex items-center justify-between min-w-[480px] relative">
-                <div className="absolute top-5 left-4 right-4 h-[1px] bg-card-border z-0" />
+              <div className="flex items-center justify-between min-w-120 relative">
+                <div className="absolute top-5 left-4 right-4 h-px bg-card-border z-0" />
                 {streakDays.map((day) => {
                   const isCurrent = day === currentStreak + 1;
                   return (

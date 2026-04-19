@@ -10,10 +10,10 @@ export function Sidebar() {
   ];
 
   return (
-    <aside className="fixed left-0 top-0 h-full w-64 bg-card border-r border-card-border flex flex-col hidden md:flex z-10">
+    <aside className="fixed left-0 top-0 h-full w-64 bg-card border-r border-card-border hidden md:flex flex-col z-10">
       <div className="p-6">
-        <h1 className="text-2xl font-bold bg-gradient-to-r from-primary to-success bg-clip-text text-transparent">
-          LoyyalMVP
+        <h1 className="text-2xl font-bold bg-linear-to-r from-primary to-success bg-clip-text text-transparent">
+          DropX
         </h1>
       </div>
       
@@ -32,7 +32,7 @@ export function Sidebar() {
       
       <div className="p-4 border-t border-card-border">
         <div className="text-sm text-foreground/60">
-          <p>© 2026 LoyyalMVP</p>
+          <p>© 2026 DropX. All rights reserved.</p>
         </div>
       </div>
     </aside>

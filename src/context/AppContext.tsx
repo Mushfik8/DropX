@@ -39,21 +39,21 @@ const AppContext = createContext<AppContextType | undefined>(undefined);
 const defaultTasks: Task[] = [
   {
     id: 1, title: 'Follow Twitter',
-    description: 'Follow ZyroX official Twitter account.',
+    description: 'Follow DropX official Twitter account.',
     points: 50, type: 'social', category: 'Social', status: 'pending',
-    link: 'https://x.com/ZyroX',
+    link: 'https://x.com/DropX',
     frequency: 'One-time',
   },
   {
     id: 2, title: 'Join Telegram',
-    description: 'Join ZyroX Telegram community.',
+    description: 'Join DropX Telegram community.',
     points: 40, type: 'social', category: 'Social', status: 'pending',
-    link: 'https://t.me/ZyroX',
+    link: 'https://t.me/DropX',
     frequency: 'One-time',
   },
   {
     id: 3, title: 'Visit Website',
-    description: 'Visit ZyroX homepage and explore.',
+    description: 'Visit DropX homepage and explore.',
     points: 20, type: 'social', category: 'Quick', status: 'pending',
     link: '/',
     frequency: 'One-time',
@@ -66,7 +66,7 @@ const defaultTasks: Task[] = [
   },
   {
     id: 5, title: 'Connect Wallet',
-    description: 'Link your Web3 wallet to receive $ZYX tokens.',
+    description: 'Link your Web3 wallet to receive $DPX tokens.',
     points: 30, type: 'web3', category: 'On-chain', status: 'pending',
     frequency: 'One-time',
   },
@@ -80,13 +80,13 @@ const defaultTasks: Task[] = [
     id: 7, title: 'Retweet Announcement',
     description: 'Retweet our latest announcement on X.',
     points: 25, type: 'social', category: 'Social', status: 'pending',
-    link: 'https://x.com/ZyroX',
+    link: 'https://x.com/DropX',
     frequency: 'One-time',
   },
 ];
 
 const defaultActivity: Activity[] = [
-  { id: 101, action: 'Account Created', detail: 'Welcome to ZyroX!', amount: '+0 XP', time: 'Just now' },
+  { id: 101, action: 'Account Created', detail: 'Welcome to DropX!', amount: '+0 XP', time: 'Just now' },
 ];
 
 export function AppProvider({ children }: { children: ReactNode }) {
@@ -99,10 +99,10 @@ export function AppProvider({ children }: { children: ReactNode }) {
   // Load from localStorage on mount
   useEffect(() => {
     try {
-      const savedPoints = localStorage.getItem('zyrox_points');
-      const savedTasks = localStorage.getItem('zyrox_tasks_v3');
-      const savedActivity = localStorage.getItem('zyrox_activity');
-      const savedWallet = localStorage.getItem('zyrox_wallet');
+      const savedPoints = localStorage.getItem('dropx_points');
+      const savedTasks = localStorage.getItem('dropx_tasks_v3');
+      const savedActivity = localStorage.getItem('dropx_activity');
+      const savedWallet = localStorage.getItem('dropx_wallet');
 
       if (savedPoints) setPoints(parseInt(savedPoints));
       if (savedTasks) {
@@ -127,13 +127,13 @@ export function AppProvider({ children }: { children: ReactNode }) {
   // Save to localStorage when state changes
   useEffect(() => {
     if (isInitialized) {
-      localStorage.setItem('zyrox_points', points.toString());
-      localStorage.setItem('zyrox_tasks_v3', JSON.stringify(tasks));
-      localStorage.setItem('zyrox_activity', JSON.stringify(recentActivity));
+      localStorage.setItem('dropx_points', points.toString());
+      localStorage.setItem('dropx_tasks_v3', JSON.stringify(tasks));
+      localStorage.setItem('dropx_activity', JSON.stringify(recentActivity));
       if (walletAddress) {
-        localStorage.setItem('zyrox_wallet', walletAddress);
+        localStorage.setItem('dropx_wallet', walletAddress);
       } else {
-        localStorage.removeItem('zyrox_wallet');
+        localStorage.removeItem('dropx_wallet');
       }
     }
   }, [points, tasks, recentActivity, walletAddress, isInitialized]);

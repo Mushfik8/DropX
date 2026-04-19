@@ -1,6 +1,6 @@
-# ZyroX — Web3 Reward Dashboard
+# DropX — Web3 Reward Dashboard
 
-ZyroX is a Web3 reward platform where users connect their wallet, complete tasks, and earn $ZYX tokens. Built with Next.js, Tailwind CSS, and Ethers.js.
+DropX is a Web3 reward platform where users connect their wallet, complete tasks, and earn $DPX tokens. Built with Next.js, Tailwind CSS, and Ethers.js.
 
 ## Tech Stack
 - **Framework**: Next.js 16 (App Router)
@@ -38,7 +38,7 @@ NEXT_PUBLIC_SUPABASE_ANON_KEY=your-key
 3. Replace localStorage calls in `src/context/AppContext.tsx` with Supabase client calls.
 
 ## Token Info
-- **Name**: ZyroX
-- **Symbol**: $ZYX
+- **Name**: DropX
+- **Symbol**: $DPX
 - **Supply**: 1,000,000,000
 - **Network**: BSC (BEP-20)
