@@ -37,7 +37,7 @@ export default function LandingPage() {
             🔥 Turn clicks into crypto.
           </div>
           <h1 className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-extrabold tracking-tight mb-6">
-            <span className="bg-gradient-to-r from-primary via-purple-400 to-primary bg-clip-text text-transparent">DropX</span>
+            <span className="bg-linear-to-r from-primary via-purple-400 to-primary bg-clip-text text-transparent">DropX</span>
           </h1>
           <p className="text-2xl sm:text-3xl md:text-4xl text-white max-w-3xl mx-auto font-bold mb-4">
             Earn Rewards. Complete Tasks. Own the Future.
