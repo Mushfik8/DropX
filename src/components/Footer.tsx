@@ -38,7 +38,7 @@ export function Footer() {
               <li><Link href="/airdrop" className="text-foreground/40 hover:text-primary transition-colors font-medium">Active Airdrops</Link></li>
               <li><Link href="/rewards" className="text-foreground/40 hover:text-primary transition-colors font-medium">Rewards Hub</Link></li>
               <li><Link href="/referrals" className="text-foreground/40 hover:text-primary transition-colors font-medium">Referral Program</Link></li>
-              <li><a href="/DropX_Whitepaper.pdf" target="_blank" className="text-foreground/40 hover:text-primary transition-colors font-medium">Documentation</a></li>
+              <li><a href="/DropX_Whitepaper.pdf" download="DropX_Whitepaper.pdf" target="_blank" className="text-foreground/40 hover:text-primary transition-colors font-medium">Documentation</a></li>
             </ul>
           </div>
 
