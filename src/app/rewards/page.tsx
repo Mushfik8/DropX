@@ -8,16 +8,29 @@ import discordIcon from '@/components/discord.svg';
 import telegramIcon from '@/components/telegram-svgrepo-com.svg';
 import walletIcon from '@/components/wallet.png';
 
+// Fixed: Moving icons outside of render
+// Fixed: Moving icons outside of render
+const XIcon = ({ className = "" }: { className?: string }) => (
+  <Image src={xIcon} alt="X" width={24} height={24} className={`w-6 h-6 ${className} object-contain`} />
+);
+const DiscordIcon = ({ className = "" }: { className?: string }) => (
+  <Image src={discordIcon} alt="Discord" width={24} height={24} className={`w-6 h-6 ${className} object-contain`} />
+);
+const TelegramIcon = ({ className = "" }: { className?: string }) => (
+  <Image src={telegramIcon} alt="Telegram" width={24} height={24} className={`w-6 h-6 ${className} object-contain`} />
+);
+const WalletIcon = ({ className = "" }: { className?: string }) => (
+  <Image src={walletIcon} alt="Wallet" width={28} height={28} className={`w-7 h-7 ${className} object-contain`} />
+);
+
 export default function RewardsPage() {
   const { points, tasks, completeTask } = useApp();
   const [activeFilter, setActiveFilter] = useState('All');
 
   const filters = ['All', 'Quick', 'Social', 'On-chain', 'Referrals'];
-
   const streakDays = [1, 2, 3, 4, 5, 6, 7];
   const currentStreak = 0;
 
-  // Filter tasks based on active filter
   const filteredTasks = tasks.filter(task => {
     if (activeFilter === 'All') return true;
     return task.category === activeFilter;
@@ -25,11 +38,6 @@ export default function RewardsPage() {
 
   const dailyTasks = filteredTasks.filter(t => t.type === 'daily');
   const otherTasks = filteredTasks.filter(t => t.type !== 'daily');
-
-  const XIcon = () => <Image src={xIcon} alt="X" className="w-6 h-6 object-contain" />;
-  const DiscordIcon = () => <Image src={discordIcon} alt="Discord" className="w-6 h-6 object-contain" />;
-  const TelegramIcon = () => <Image src={telegramIcon} alt="Telegram" className="w-6 h-6 object-contain" />;
-  const WalletIcon = () => <Image src={walletIcon} alt="Wallet" className="w-7 h-7 object-contain" />;
 
   const getTaskIcon = (task: typeof tasks[0]) => {
     if (task.type === 'web3') return <WalletIcon />;
@@ -42,208 +50,198 @@ export default function RewardsPage() {
     return '✨';
   };
 
-  // Tier calculation
   const getTier = () => {
-    if (points >= 500) return { name: 'Gold', color: 'text-warning', bg: 'bg-warning/10' };
-    if (points >= 200) return { name: 'Silver', color: 'text-foreground/80', bg: 'bg-white/5' };
-    return { name: 'Bronze', color: 'text-[#b07d57]', bg: 'bg-[#b07d57]/10' };
+    if (points >= 500) return { name: 'Gold', color: 'text-primary', glow: 'shadow-[0_0_20px_rgba(139,92,246,0.3)]', border: 'border-primary/30', bg: 'bg-primary/5' };
+    if (points >= 200) return { name: 'Silver', color: 'text-secondary', glow: 'shadow-[0_0_20px_rgba(59,130,246,0.3)]', border: 'border-secondary/30', bg: 'bg-secondary/5' };
+    return { name: 'Bronze', color: 'text-orange-400', glow: '', border: 'border-orange-400/20', bg: 'bg-orange-400/5' };
   };
   const tier = getTier();
 
   return (
-    <div className="py-10 px-4 pb-10 max-w-5xl mx-auto space-y-12">
+    <div className="py-20 px-4 min-h-screen max-w-6xl mx-auto space-y-16 relative overflow-hidden">
+      
+      {/* Background Decor */}
+      <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-primary/5 rounded-full blur-[120px] pointer-events-none" />
+      <div className="absolute bottom-0 left-0 w-[400px] h-[400px] bg-secondary/5 rounded-full blur-[100px] pointer-events-none" />
 
-      {/* Page Header */}
-      <div className="space-y-6">
-        <div>
-          <h1 className="text-4xl font-extrabold mb-2">Rewards</h1>
-          <p className="text-foreground/60 text-lg">Earn XP by completing tasks. Climb tiers and unlock $DPX airdrops.</p>
+      {/* Header & Stats Dashboard */}
+      <div className="relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-8 items-end">
+        <div className="lg:col-span-7">
+          <h1 className="text-4xl sm:text-6xl font-black text-white tracking-tighter mb-4">
+            REWARDS <span className="text-primary glow-text-primary italic">HUB</span>
+          </h1>
+          <p className="text-foreground/50 text-lg font-medium max-w-xl">
+            Monetize your engagement. Complete daily missions and social tasks to unlock premium ecosystem rewards.
+          </p>
         </div>
-
-        {/* Tier & XP display */}
-        <div className="flex items-center gap-6 mt-8">
-          <div className={`w-16 h-16 ${tier.bg} rounded-full flex items-center justify-center text-4xl`}>
-            ⭐
-          </div>
-          <div>
-            <div className="flex items-center gap-3 mb-1">
-              <h2 className="text-xl font-bold text-white">{tier.name} Tier</h2>
-              <span className={`${tier.bg} ${tier.color} text-xs font-bold px-2 py-0.5 rounded-full`}>Current tier</span>
+        
+        <div className="lg:col-span-5">
+          <div className={`glass-card p-6 sm:p-8 rounded-[32px] border-white/10 ${tier.glow} ${tier.border} ${tier.bg} relative overflow-hidden group`}>
+            <div className="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity">
+              <span className="text-6xl">⭐</span>
             </div>
-            <div className="text-white font-bold flex items-baseline gap-2">
-              <span className="text-4xl">{points}</span>
-              <span className="text-xl text-foreground/60">XP</span>
+            <div className="relative z-10 flex items-center justify-between gap-6">
+              <div>
+                <p className="text-[10px] font-black uppercase tracking-[0.2em] text-foreground/40 mb-2">Current Tier Status</p>
+                <h2 className={`text-4xl font-black tracking-tighter ${tier.color} mb-1`}>{tier.name}</h2>
+                <div className="flex items-center gap-2">
+                  <span className="w-2 h-2 rounded-full bg-primary animate-pulse" />
+                  <span className="text-xs font-bold text-foreground/60 uppercase">Earning Active</span>
+                </div>
+              </div>
+              <div className="text-right">
+                <p className="text-[10px] font-black uppercase tracking-[0.2em] text-foreground/40 mb-2">Total Points</p>
+                <div className="text-5xl font-black text-white tracking-tighter flex items-baseline gap-1">
+                  {points}<span className="text-xl text-primary">XP</span>
+                </div>
+              </div>
             </div>
           </div>
         </div>
       </div>
 
-      {/* Earn Rewards Section */}
-      <div className="space-y-6">
-        <h2 className="text-2xl font-bold text-white">Earn rewards</h2>
-
-        {/* Filters */}
-        <div className="flex flex-wrap gap-2">
-          {filters.map(filter => (
-            <button
-              key={filter}
-              onClick={() => setActiveFilter(filter)}
-              className={`px-5 py-2 rounded-full font-medium transition-colors text-sm ${
-                activeFilter === filter
-                  ? 'bg-primary text-black'
-                  : 'bg-card text-foreground/70 hover:bg-card-border hover:text-white border border-card-border/50'
-              }`}
-            >
-              {filter}
-            </button>
-          ))}
-        </div>
-
-        {/* Daily Check-in */}
-        {dailyTasks.map(task => (
-          <div key={task.id} className="bg-card border border-card-border p-6 md:p-8 rounded-2xl w-full">
-            <div className="flex items-start gap-4">
-              <div className="text-primary text-2xl mt-1">📅</div>
-              <div>
-                <div className="flex flex-wrap items-center gap-3 mb-2">
-                  <h3 className="font-bold text-lg text-white">{task.title}</h3>
-                  <span className="bg-primary/10 text-primary text-xs font-bold px-2 py-1 rounded">+{task.points} XP / day</span>
-                </div>
-                <p className="text-foreground/60 text-sm max-w-md">{task.description}</p>
-              </div>
-            </div>
-
-            {/* Streak */}
-            <div className="mt-8 mb-6 overflow-x-auto pb-2">
-              <div className="flex items-center justify-between min-w-120 relative">
-                <div className="absolute top-5 left-4 right-4 h-px bg-card-border z-0" />
-                {streakDays.map((day) => {
-                  const isCurrent = day === currentStreak + 1;
-                  return (
-                    <div key={day} className="flex flex-col items-center gap-2 relative z-10 w-12">
-                      <div className={`w-10 h-10 rounded-full flex items-center justify-center text-sm font-bold bg-card border-2 ${
-                        isCurrent ? 'border-primary text-primary' : 'border-card-border text-foreground/40'
-                      }`}>
-                        {day}
-                      </div>
-                      <span className="text-xs text-foreground/50 whitespace-nowrap">Day {day}</span>
-                    </div>
-                  );
-                })}
-              </div>
-            </div>
-
-            <div className="flex flex-col sm:flex-row sm:items-center justify-between pt-4 border-t border-card-border gap-4">
-              <p className="text-sm text-foreground/50 text-center sm:text-left">
-                Day {currentStreak} of 7 · Complete all 7 days to finish the cycle
-              </p>
+      {/* Task Explorer */}
+      <div className="space-y-8 relative z-10">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-6">
+          <h2 className="text-2xl font-black text-white tracking-tight flex items-center gap-3">
+            <span className="w-1.5 h-6 bg-primary rounded-full" />
+            Available Missions
+          </h2>
+          
+          <div className="flex flex-wrap gap-2 p-1 bg-white/5 rounded-2xl border border-white/5">
+            {filters.map(filter => (
               <button
-                onClick={() => completeTask(task.id)}
-                disabled={task.status === 'completed'}
-                className={`px-8 py-2.5 rounded-xl font-bold transition-colors shrink-0 ${
-                  task.status === 'completed'
-                    ? 'bg-success/10 border border-success/30 text-success cursor-not-allowed'
-                    : 'bg-primary hover:bg-primary-hover text-black'
+                key={filter}
+                onClick={() => setActiveFilter(filter)}
+                className={`px-5 py-2 rounded-xl font-black text-xs uppercase tracking-widest transition-all ${
+                  activeFilter === filter
+                    ? 'bg-primary text-white shadow-[0_0_15px_rgba(139,92,246,0.4)]'
+                    : 'text-foreground/40 hover:text-white hover:bg-white/5'
                 }`}
               >
-                {task.status === 'completed' ? 'Checked in ✓' : 'Check in'}
+                {filter}
               </button>
-            </div>
+            ))}
           </div>
-        ))}
+        </div>
 
-        {/* Social Tasks (with links) */}
-        {otherTasks.filter(t => t.link).length > 0 && (
-          <div className="space-y-4">
-            <h3 className="text-lg font-bold text-white flex items-center gap-2">🔗 Social Tasks</h3>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              {otherTasks.filter(t => t.link).map(task => (
-                <div
-                  key={task.id}
-                  className={`bg-card border rounded-2xl p-6 flex flex-col justify-between transition-all ${
-                    task.status === 'completed'
-                      ? 'border-success/30 opacity-80'
-                      : 'border-card-border hover:border-primary/40'
-                  }`}
-                >
-                  <div className="flex items-start gap-4 mb-4">
-                    <div className="w-11 h-11 bg-primary/10 rounded-xl flex items-center justify-center text-xl shrink-0">
-                      {getTaskIcon(task)}
-                    </div>
-                    <div className="flex-1 min-w-0">
-                      <h3 className="font-bold text-white text-base mb-1">{task.title}</h3>
-                      <p className="text-foreground/50 text-sm">{task.description}</p>
-                      {task.link && task.link !== '/' && (
-                        <a href={task.link} target="_blank" rel="noopener noreferrer"
-                          className="text-primary text-xs font-bold mt-1 inline-block hover:underline">
-                          {task.link.replace('https://', '')} →
-                        </a>
-                      )}
-                    </div>
-                  </div>
-                  <div className="flex items-end justify-between pt-4 border-t border-card-border/50">
-                    <div>
-                      <span className="text-primary font-extrabold text-lg">+{task.points} XP</span>
-                      <span className="text-foreground/40 text-sm ml-2">{task.frequency}</span>
-                    </div>
-                    <button
-                      onClick={() => completeTask(task.id)}
-                      disabled={task.status === 'completed'}
-                      className={`px-5 py-2 rounded-xl font-bold text-sm transition-all ${
-                        task.status === 'completed'
-                          ? 'bg-success/10 border border-success/30 text-success cursor-not-allowed'
-                          : 'bg-primary hover:bg-primary-hover text-black'
-                      }`}
-                    >
-                      {task.status === 'completed' ? 'Done ✓' : 'Start'}
-                    </button>
-                  </div>
+        {/* Daily Streak Section */}
+        {dailyTasks.map(task => (
+          <div key={task.id} className="glass-card p-8 sm:p-10 rounded-[40px] border-primary/20 bg-primary/5 group">
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
+              <div className="lg:col-span-5">
+                <div className="inline-flex items-center gap-2 px-3 py-1 bg-primary/10 border border-primary/20 rounded-full text-primary text-[10px] font-black uppercase tracking-widest mb-4">
+                   Recurrent Mission
                 </div>
-              ))}
-            </div>
-          </div>
-        )}
-
-        {/* Other Tasks (no link) */}
-        {otherTasks.filter(t => !t.link).length > 0 && (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
-            {otherTasks.filter(t => !t.link).map(task => (
-              <div key={task.id} className="bg-card border border-card-border p-6 rounded-2xl flex flex-col justify-between h-full hover:border-primary/30 transition-colors">
-                <div className="flex items-start gap-4 mb-4">
-                  <div className="w-10 h-10 bg-primary/10 rounded-xl flex items-center justify-center text-xl shrink-0">
-                    {getTaskIcon(task)}
-                  </div>
-                  <div>
-                    <h3 className="font-bold text-white mb-1">{task.title}</h3>
-                    <p className="text-foreground/50 text-sm">{task.description}</p>
-                  </div>
+                <h3 className="text-3xl font-black text-white tracking-tighter mb-4 group-hover:text-primary transition-colors">{task.title}</h3>
+                <p className="text-foreground/50 font-medium leading-relaxed mb-6">
+                  {task.description} Build your streak and multiply your rewards by checking in every single day.
+                </p>
+                <div className="flex items-center gap-4">
+                   <div className="text-4xl font-black text-white">+{task.points}<span className="text-sm text-primary">XP</span></div>
+                   <div className="h-10 w-px bg-white/10" />
+                   <div className="text-xs font-bold text-foreground/40 uppercase tracking-widest leading-tight">Daily<br />Multiplier</div>
                 </div>
-                <div className="flex items-end justify-between mt-6">
-                  <div className="text-sm">
-                    <span className="text-primary font-bold">+{task.points} XP </span>
-                    <span className="text-foreground/40">{task.frequency}</span>
+              </div>
+              
+              <div className="lg:col-span-7">
+                <div className="bg-black/20 rounded-3xl p-6 border border-white/5">
+                  <div className="flex justify-between items-center mb-6">
+                     <span className="text-xs font-black text-foreground/40 uppercase tracking-widest">Your Weekly Progress</span>
+                     <span className="text-xs font-black text-primary uppercase tracking-widest">Day {currentStreak} of 7</span>
+                  </div>
+                  <div className="flex items-center justify-between gap-2">
+                    {streakDays.map((day) => {
+                      const isCurrent = day === currentStreak + 1;
+                      const isPast = day <= currentStreak;
+                      return (
+                        <div key={day} className="flex flex-col items-center gap-3">
+                          <div className={`w-10 h-10 sm:w-12 sm:h-12 rounded-2xl flex items-center justify-center text-sm font-black transition-all ${
+                            isCurrent ? 'bg-primary text-white shadow-[0_0_15px_rgba(139,92,246,0.5)] scale-110' : 
+                            isPast ? 'bg-success/20 text-success border border-success/30' : 
+                            'bg-white/5 text-foreground/20 border border-white/5'
+                          }`}>
+                            {isPast ? '✓' : day}
+                          </div>
+                        </div>
+                      );
+                    })}
                   </div>
                   <button
                     onClick={() => completeTask(task.id)}
                     disabled={task.status === 'completed'}
-                    className={`px-5 py-2 rounded-xl font-bold text-sm transition-colors ${
+                    className={`w-full mt-8 py-4 rounded-2xl font-black text-sm uppercase tracking-widest transition-all ${
                       task.status === 'completed'
-                        ? 'bg-success/10 border border-success/30 text-success cursor-not-allowed'
-                        : 'bg-primary hover:bg-primary-hover text-black'
+                        ? 'bg-success/10 text-success cursor-not-allowed opacity-50'
+                        : 'bg-white text-black hover:bg-primary hover:text-white shadow-xl'
                     }`}
                   >
-                    {task.status === 'completed' ? 'Done ✓' : task.type === 'web3' ? 'Claim' : 'Start'}
+                    {task.status === 'completed' ? 'ALREADY CLAIMED' : 'CLAIM DAILY REWARD'}
                   </button>
                 </div>
               </div>
-            ))}
+            </div>
           </div>
-        )}
+        ))}
+
+        {/* Task Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {otherTasks.map(task => (
+            <div
+              key={task.id}
+              className={`glass-card p-8 rounded-[32px] flex flex-col justify-between transition-all group ${
+                task.status === 'completed' ? 'opacity-60 grayscale-[0.5]' : 'hover:-translate-y-2 hover:border-primary/40'
+              }`}
+            >
+              <div>
+                <div className="flex justify-between items-start mb-6">
+                  <div className="w-14 h-14 bg-white/5 rounded-2xl flex items-center justify-center text-2xl group-hover:scale-110 transition-transform">
+                    {getTaskIcon(task)}
+                  </div>
+                  <div className="text-right">
+                    <div className="text-2xl font-black text-white tracking-tighter">+{task.points}</div>
+                    <div className="text-[10px] font-bold text-primary uppercase tracking-widest">XP</div>
+                  </div>
+                </div>
+                
+                <h3 className="text-xl font-black text-white tracking-tight mb-2 uppercase group-hover:text-primary transition-colors">
+                  {task.title}
+                </h3>
+                <p className="text-foreground/40 text-sm font-medium leading-relaxed mb-6">
+                  {task.description}
+                </p>
+              </div>
+
+              <div className="space-y-4">
+                {task.link && task.link !== '/' && (
+                  <div className="h-px bg-white/5" />
+                )}
+                <div className="flex items-center justify-between">
+                  <span className="text-[10px] font-black text-foreground/30 uppercase tracking-[0.2em]">
+                    {task.frequency}
+                  </span>
+                  <button
+                    onClick={() => completeTask(task.id)}
+                    disabled={task.status === 'completed'}
+                    className={`px-6 py-2.5 rounded-xl font-black text-xs uppercase tracking-widest transition-all ${
+                      task.status === 'completed'
+                        ? 'text-success bg-success/10'
+                        : 'bg-white/5 text-white hover:bg-primary border border-white/10 hover:border-primary'
+                    }`}
+                  >
+                    {task.status === 'completed' ? 'DONE ✓' : 'START'}
+                  </button>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
 
         {filteredTasks.length === 0 && (
-          <div className="text-center py-16 text-foreground/40">
-            <p className="text-xl mb-2">No tasks in this category</p>
-            <p className="text-sm">Try selecting a different filter.</p>
+          <div className="glass-card p-20 rounded-[40px] text-center border-dashed border-white/10">
+            <div className="text-6xl mb-6 opacity-20">📂</div>
+            <h3 className="text-2xl font-black text-white/40 tracking-tight">NO MISSIONS FOUND</h3>
+            <p className="text-foreground/20 font-medium">Select another filter to explore available opportunities.</p>
           </div>
         )}
       </div>

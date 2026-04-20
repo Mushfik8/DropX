@@ -10,76 +10,99 @@ export default function AirdropPage() {
   const totalSocial = tasks.filter(t => t.type === 'social').length;
 
   return (
-    <div className="py-10 px-4 flex flex-col items-center max-w-3xl mx-auto space-y-8">
+    <div className="py-20 px-4 min-h-[calc(100vh-80px)] flex flex-col items-center max-w-4xl mx-auto space-y-12 relative overflow-hidden">
+      
+      {/* Background Glows */}
+      <div className="absolute top-1/4 left-1/4 w-64 h-64 bg-primary/10 rounded-full blur-[100px] pointer-events-none" />
+      <div className="absolute bottom-1/4 right-1/4 w-64 h-64 bg-secondary/5 rounded-full blur-[100px] pointer-events-none" />
 
       {/* Hero */}
-      <div className="text-center space-y-4 w-full">
-        <div className="w-20 h-20 sm:w-24 sm:h-24 bg-primary/10 text-5xl flex items-center justify-center rounded-full mx-auto">
+      <div className="text-center space-y-6 w-full relative z-10">
+        <div className="w-24 h-24 bg-white/5 border border-white/10 text-5xl flex items-center justify-center rounded-3xl mx-auto shadow-2xl animate-glow-pulse">
           🪂
         </div>
-        <h1 className="text-3xl sm:text-4xl font-extrabold text-white">$DPX Airdrop</h1>
-        <p className="text-foreground/60 text-sm sm:text-lg max-w-xl mx-auto leading-relaxed">
-          The $DPX token airdrop snapshot has not been taken yet. Keep earning XP and completing tasks to maximize your allocation.
+        <h1 className="text-4xl sm:text-6xl font-black text-white tracking-tighter uppercase">
+          $DPX <span className="text-primary glow-text-primary">Airdrop</span>
+        </h1>
+        <p className="text-foreground/50 text-lg max-w-2xl mx-auto leading-relaxed font-medium">
+          The $DPX snapshot is approaching. Complete missions, accumulate XP, and secure your position in the next generation of Web3 rewards.
         </p>
       </div>
 
-      {/* Eligibility */}
-      <div className="bg-card border border-card-border rounded-2xl p-4 sm:p-6 w-full">
-        <h3 className="font-bold text-white text-base sm:text-lg mb-4">Your Eligibility Status</h3>
-        <div className="grid grid-cols-3 gap-2 sm:gap-4">
-          <div className="bg-background rounded-xl p-3 sm:p-4 text-center border border-card-border/50">
-            <p className="text-foreground/50 text-xs sm:text-sm mb-1">Your XP</p>
-            <p className={`text-lg sm:text-2xl font-extrabold ${points >= 500 ? 'text-success' : 'text-primary'}`}>{points}</p>
+      {/* Eligibility Cards */}
+      <div className="glass-card p-8 sm:p-10 w-full relative z-10 border-white/10 rounded-[32px]">
+        <h3 className="font-black text-white text-xl mb-8 uppercase tracking-widest flex items-center gap-3">
+          <span className="w-2 h-6 bg-primary rounded-full" />
+          Live Eligibility Status
+        </h3>
+        
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-6">
+          <div className="bg-white/5 rounded-2xl p-6 text-center border border-white/5 hover:border-primary/30 transition-all group">
+            <p className="text-foreground/40 text-xs font-bold uppercase tracking-widest mb-2 group-hover:text-primary transition-colors">Total XP</p>
+            <p className={`text-4xl font-black tracking-tighter ${points >= 500 ? 'text-success' : 'text-primary'}`}>{points}</p>
+            <div className="mt-2 text-[10px] font-bold text-foreground/20">MIN 500 REQUIRED</div>
           </div>
-          <div className="bg-background rounded-xl p-3 sm:p-4 text-center border border-card-border/50">
-            <p className="text-foreground/50 text-xs sm:text-sm mb-1">Wallet</p>
-            <p className={`text-lg sm:text-2xl font-extrabold ${walletAddress ? 'text-success' : 'text-red-400'}`}>
-              {walletAddress ? '✓' : '✗'}
-            </p>
+          
+          <div className="bg-white/5 rounded-2xl p-6 text-center border border-white/5 hover:border-primary/30 transition-all group">
+            <p className="text-foreground/40 text-xs font-bold uppercase tracking-widest mb-2 group-hover:text-primary transition-colors">Wallet Status</p>
+            <div className="flex items-center justify-center h-10">
+              {walletAddress ? (
+                <span className="text-success font-black text-xl flex items-center gap-2">
+                  <span className="w-2 h-2 rounded-full bg-success shadow-[0_0_8px_rgba(16,185,129,0.8)]" />
+                  SYNCED
+                </span>
+              ) : (
+                <span className="text-error font-black text-xl flex items-center gap-2">
+                   DISCONNECTED
+                </span>
+              )}
+            </div>
           </div>
-          <div className="bg-background rounded-xl p-3 sm:p-4 text-center border border-card-border/50">
-            <p className="text-foreground/50 text-xs sm:text-sm mb-1">Tasks Done</p>
-            <p className="text-lg sm:text-2xl font-extrabold text-primary">{completedCount}/{tasks.length}</p>
+          
+          <div className="bg-white/5 rounded-2xl p-6 text-center border border-white/5 hover:border-primary/30 transition-all group">
+            <p className="text-foreground/40 text-xs font-bold uppercase tracking-widest mb-2 group-hover:text-primary transition-colors">Mission Progress</p>
+            <p className="text-4xl font-black text-white tracking-tighter">{completedCount}/{tasks.length}</p>
+            <div className="mt-2 text-[10px] font-bold text-foreground/20">TOTAL TASKS</div>
           </div>
         </div>
       </div>
 
-      {/* Requirements */}
-      <div className="bg-card border border-card-border rounded-2xl p-4 sm:p-6 w-full">
-        <h3 className="font-bold text-white text-base sm:text-lg mb-4">Airdrop Requirements</h3>
-        <ul className="space-y-3 sm:space-y-4">
-          <li className="flex items-start gap-3">
-            <span className={`text-lg shrink-0 ${points >= 500 ? 'text-success' : 'text-foreground/30'}`}>
-              {points >= 500 ? '✓' : '○'}
-            </span>
-            <span className={points >= 500 ? 'text-white' : 'text-foreground/60 text-sm sm:text-base'}>
-              Maintain a minimum of <strong className="text-primary">500 XP</strong>
-            </span>
-          </li>
-          <li className="flex items-start gap-3">
-            <span className={`text-lg shrink-0 ${walletAddress ? 'text-success' : 'text-foreground/30'}`}>
-              {walletAddress ? '✓' : '○'}
-            </span>
-            <span className={walletAddress ? 'text-white' : 'text-foreground/60 text-sm sm:text-base'}>
-              Keep <strong className="text-primary">wallet connected</strong>
-            </span>
-          </li>
-          <li className="flex items-start gap-3">
-            <span className={`text-lg shrink-0 ${socialDone >= totalSocial ? 'text-success' : 'text-foreground/30'}`}>
-              {socialDone >= totalSocial ? '✓' : '○'}
-            </span>
-            <span className={socialDone >= totalSocial ? 'text-white' : 'text-foreground/60 text-sm sm:text-base'}>
-              Complete all <strong className="text-primary">social tasks</strong> ({socialDone}/{totalSocial})
-            </span>
-          </li>
-        </ul>
+      {/* Requirements Details */}
+      <div className="w-full grid grid-cols-1 lg:grid-cols-2 gap-8 relative z-10">
+        <div className="glass-card p-8 rounded-3xl border-white/5">
+          <h3 className="font-black text-white text-lg mb-6 uppercase tracking-widest">Requirements</h3>
+          <div className="space-y-6">
+            {[
+              { label: 'Minimum 500 XP Accumulated', done: points >= 500 },
+              { label: 'Verified Web3 Wallet Connection', done: !!walletAddress },
+              { label: 'All Social Channels Verified', done: socialDone >= totalSocial },
+            ].map((req, i) => (
+              <div key={i} className="flex items-center gap-4 group">
+                <div className={`w-8 h-8 rounded-full flex items-center justify-center transition-all ${req.done ? 'bg-success/20 text-success' : 'bg-white/5 text-foreground/20'}`}>
+                  {req.done ? '✓' : '!'}
+                </div>
+                <span className={`font-bold transition-all ${req.done ? 'text-white' : 'text-foreground/40'}`}>
+                  {req.label}
+                </span>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        <div className="glass-card p-8 rounded-3xl border-white/5 bg-primary/5 flex flex-col justify-center items-center text-center">
+          <div className="text-4xl mb-4">🏆</div>
+          <h3 className="font-black text-white text-xl mb-2 tracking-tight">Max Allocation Tip</h3>
+          <p className="text-foreground/50 text-sm font-medium leading-relaxed">
+            Users with over <span className="text-primary font-black">2,000 XP</span> and at least one referral will qualify for the <span className="text-white font-black">Diamond Tier</span> allocation.
+          </p>
+        </div>
       </div>
 
       <Link
         href="/rewards"
-        className="bg-primary hover:bg-primary-hover text-black font-bold px-6 sm:px-8 py-3 sm:py-4 rounded-xl text-sm sm:text-lg transition-all shadow-lg shadow-primary/20 text-center w-full sm:w-auto"
+        className="w-full sm:w-auto bg-linear-to-r from-primary to-purple-600 hover:scale-105 active:scale-95 text-white font-black px-12 py-5 rounded-2xl text-lg transition-all shadow-2xl shadow-primary/40 text-center relative z-10"
       >
-        Complete Tasks to Qualify →
+        GO TO REWARDS HUB →
       </Link>
     </div>
   );

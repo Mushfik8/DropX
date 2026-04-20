@@ -1,7 +1,7 @@
 "use client";
 
 import { createContext, useContext, useEffect, useState, ReactNode, useCallback } from "react";
-import { BrowserProvider } from "ethers";
+import { BrowserProvider, Eip1193Provider } from "ethers";
 
 // Types
 export type Task = {
@@ -29,6 +29,7 @@ type AppContextType = {
   tasks: Task[];
   recentActivity: Activity[];
   walletAddress: string | null;
+  isConnecting: boolean;
   completeTask: (taskId: number) => void;
   connectWallet: () => Promise<void>;
   disconnectWallet: () => void;
@@ -95,9 +96,12 @@ export function AppProvider({ children }: { children: ReactNode }) {
   const [recentActivity, setRecentActivity] = useState<Activity[]>(defaultActivity);
   const [walletAddress, setWalletAddress] = useState<string | null>(null);
   const [isInitialized, setIsInitialized] = useState(false);
+  const [isConnecting, setIsConnecting] = useState(false);
 
-  // Load from localStorage on mount
+  // Load from localStorage on mount - using a single effect to batch updates
   useEffect(() => {
+    if (typeof window === 'undefined') return;
+
     try {
       const savedPoints = localStorage.getItem('dropx_points');
       const savedTasks = localStorage.getItem('dropx_tasks_v3');
@@ -107,26 +111,24 @@ export function AppProvider({ children }: { children: ReactNode }) {
       if (savedPoints) setPoints(parseInt(savedPoints));
       if (savedTasks) {
         const parsed = JSON.parse(savedTasks);
-        if (parsed.length > 0 && 'category' in parsed[0]) {
+        if (Array.isArray(parsed) && parsed.length > 0 && 'category' in parsed[0]) {
           setTasks(parsed);
-        } else {
-          setTasks(defaultTasks);
         }
-      } else {
-        setTasks(defaultTasks);
       }
       if (savedActivity) setRecentActivity(JSON.parse(savedActivity));
       if (savedWallet) setWalletAddress(savedWallet);
-    } catch {
-      setTasks(defaultTasks);
+    } catch (err) {
+      console.error("Error loading state from localStorage", err);
+    } finally {
+      setIsInitialized(true);
     }
-
-    setIsInitialized(true);
   }, []);
 
   // Save to localStorage when state changes
   useEffect(() => {
-    if (isInitialized) {
+    if (!isInitialized) return;
+
+    const saveState = () => {
       localStorage.setItem('dropx_points', points.toString());
       localStorage.setItem('dropx_tasks_v3', JSON.stringify(tasks));
       localStorage.setItem('dropx_activity', JSON.stringify(recentActivity));
@@ -135,23 +137,23 @@ export function AppProvider({ children }: { children: ReactNode }) {
       } else {
         localStorage.removeItem('dropx_wallet');
       }
-    }
+    };
+
+    // Use requestIdleCallback if available for better performance, or just a small timeout
+    const timeoutId = setTimeout(saveState, 500);
+    return () => clearTimeout(timeoutId);
   }, [points, tasks, recentActivity, walletAddress, isInitialized]);
 
   const completeTask = useCallback((taskId: number) => {
     setTasks(prev => {
-      const task = prev.find(t => t.id === taskId);
-      if (!task || task.status === 'completed') return prev;
+      const taskIndex = prev.findIndex(t => t.id === taskId);
+      if (taskIndex === -1 || prev[taskIndex].status === 'completed') return prev;
 
-      // Open external link if the task has one (skip "/" homepage links)
-      if (task.link && task.link !== '/') {
-        window.open(task.link, '_blank', 'noopener,noreferrer');
-      }
-
-      // Update points
+      const task = prev[taskIndex];
+      
+      // Update points and activity in the same tick if possible
       setPoints(p => p + task.points);
-
-      // Add activity
+      
       const newActivity: Activity = {
         id: Date.now(),
         action: 'Completed Task',
@@ -161,44 +163,54 @@ export function AppProvider({ children }: { children: ReactNode }) {
       };
       setRecentActivity(act => [newActivity, ...act].slice(0, 10));
 
-      return prev.map(t =>
-        t.id === taskId ? { ...t, status: 'completed' as const } : t
-      );
+      // Open link after state updates
+      if (task.link && task.link !== '/') {
+        window.open(task.link, '_blank', 'noopener,noreferrer');
+      }
+
+      const newTasks = [...prev];
+      newTasks[taskIndex] = { ...task, status: 'completed' as const };
+      return newTasks;
     });
   }, []);
 
   const connectWallet = async () => {
-    if (typeof window.ethereum !== 'undefined') {
-      try {
-        const provider = new BrowserProvider(window.ethereum);
-        const signer = await provider.getSigner();
-        const address = await signer.getAddress();
-        setWalletAddress(address);
+    if (typeof window.ethereum === 'undefined') {
+      alert("Please install a Web3 wallet (like MetaMask) to use this feature!");
+      return;
+    }
 
-        // complete wallet task if pending
-        setTasks(prev => {
-          const walletTask = prev.find(t => t.type === 'web3' && t.status === 'pending');
-          if (walletTask) {
-            setPoints(p => p + walletTask.points);
-            const newActivity: Activity = {
-              id: Date.now(),
-              action: 'Completed Task',
-              detail: walletTask.title,
-              amount: `+${walletTask.points} XP`,
-              time: 'Just now'
-            };
-            setRecentActivity(act => [newActivity, ...act].slice(0, 10));
-            return prev.map(t =>
-              t.id === walletTask.id ? { ...t, status: 'completed' as const } : t
-            );
-          }
-          return prev;
-        });
-      } catch (err) {
-        console.error("User rejected request or error occurred", err);
-      }
-    } else {
-      alert("Please install MetaMask to use this feature!");
+    setIsConnecting(true);
+    try {
+      const provider = new BrowserProvider(window.ethereum as Eip1193Provider);
+      const signer = await provider.getSigner();
+      const address = await signer.getAddress();
+      setWalletAddress(address);
+
+      // Batch updates for points and tasks
+      setTasks(prev => {
+        const walletTask = prev.find(t => t.type === 'web3' && t.status === 'pending');
+        if (walletTask) {
+          setPoints(p => p + walletTask.points);
+          const newActivity: Activity = {
+            id: Date.now(),
+            action: 'Completed Task',
+            detail: walletTask.title,
+            amount: `+${walletTask.points} XP`,
+            time: 'Just now'
+          };
+          setRecentActivity(act => [newActivity, ...act].slice(0, 10));
+          
+          return prev.map(t =>
+            t.id === walletTask.id ? { ...t, status: 'completed' as const } : t
+          );
+        }
+        return prev;
+      });
+    } catch (err) {
+      console.error("Wallet connection failed", err);
+    } finally {
+      setIsConnecting(false);
     }
   };
 
@@ -207,7 +219,16 @@ export function AppProvider({ children }: { children: ReactNode }) {
   };
 
   return (
-    <AppContext.Provider value={{ points, tasks, recentActivity, walletAddress, completeTask, connectWallet, disconnectWallet }}>
+    <AppContext.Provider value={{ 
+      points, 
+      tasks, 
+      recentActivity, 
+      walletAddress, 
+      isConnecting,
+      completeTask, 
+      connectWallet, 
+      disconnectWallet 
+    }}>
       {children}
     </AppContext.Provider>
   );
@@ -223,6 +244,6 @@ export function useApp() {
 
 declare global {
   interface Window {
-    ethereum?: any;
+    ethereum?: Eip1193Provider;
   }
 }
