@@ -213,11 +213,11 @@ export default function AboutPage() {
         <div className="max-w-3xl mx-auto text-center">
           <h2 className="text-2xl font-black mb-10 text-white uppercase tracking-widest italic">Join the Movement</h2>
           <div className="flex flex-wrap justify-center gap-6">
-            <Link href="https://t.me/dropx" className="flex items-center gap-3 bg-white/5 border border-white/10 px-10 py-5 rounded-2xl hover:border-primary/50 transition-all group">
+            <Link href="https://t.me/dropxtoken" className="flex items-center gap-3 bg-white/5 border border-white/10 px-10 py-5 rounded-2xl hover:border-primary/50 transition-all group">
               <TelegramIcon className="group-hover:scale-110 transition-transform" /> 
               <span className="font-black text-white uppercase tracking-widest text-xs">Telegram</span>
             </Link>
-            <Link href="https://x.com/dropx" className="flex items-center gap-3 bg-white/5 border border-white/10 px-10 py-5 rounded-2xl hover:border-secondary/50 transition-all group">
+            <Link href="https://x.com/dropxtoken" className="flex items-center gap-3 bg-white/5 border border-white/10 px-10 py-5 rounded-2xl hover:border-secondary/50 transition-all group">
               <XIcon className="group-hover:scale-110 transition-transform" /> 
               <span className="font-black text-white uppercase tracking-widest text-xs">X / Twitter</span>
             </Link>

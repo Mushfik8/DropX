@@ -257,7 +257,7 @@ export default function LandingPage() {
               Connect Wallet
             </button>
             <Link
-              href="https://t.me/dropx"
+              href="https://t.me/dropxtoken"
               className="bg-white/5 hover:bg-white/10 text-white px-12 py-5 rounded-2xl font-black text-xl border border-white/10 hover:border-primary/50 transition-all flex items-center gap-3"
             >
               <TelegramIcon className="w-6 h-6" />

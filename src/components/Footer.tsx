@@ -22,11 +22,11 @@ export function Footer() {
               The premier Web3 earning ecosystem. Bridge the gap between engagement and rewards with our gamified platform.
             </p>
             <div className="flex gap-4">
-              <a href="https://x.com/dropx" target="_blank" rel="noreferrer" className="w-10 h-10 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center hover:bg-primary/20 hover:border-primary/50 transition-all group">
-                <Image src={xIcon} alt="X" className="w-5 h-5 object-contain group-hover:scale-110 transition-transform" />
+              <a href="https://x.com/dropxtoken" target="_blank" rel="noreferrer" className="w-10 h-10 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center hover:bg-primary/20 hover:border-primary/50 transition-all group">
+                <Image src={xIcon} alt="X" width={20} height={20} className="w-5 h-5 object-contain group-hover:scale-110 transition-transform" />
               </a>
-              <a href="https://t.me/dropx" target="_blank" rel="noreferrer" className="w-10 h-10 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center hover:bg-secondary/20 hover:border-secondary/50 transition-all group">
-                <Image src={telegramIcon} alt="Telegram" className="w-5 h-5 object-contain group-hover:scale-110 transition-transform" />
+              <a href="https://t.me/dropxtoken" target="_blank" rel="noreferrer" className="w-10 h-10 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center hover:bg-secondary/20 hover:border-secondary/50 transition-all group">
+                <Image src={telegramIcon} alt="Telegram" width={20} height={20} className="w-5 h-5 object-contain group-hover:scale-110 transition-transform" />
               </a>
             </div>
           </div>

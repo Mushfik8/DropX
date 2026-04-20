@@ -126,7 +126,7 @@ export default function MobileMenu({ isOpen, onClose, navLinks }: MobileMenuProp
             {/* Social Links */}
             <div className="flex gap-4 pt-6 border-t border-white/5">
               <a
-                href="https://t.me/dropx"
+                href="https://t.me/dropxtoken"
                 target="_blank"
                 rel="noreferrer"
                 className="flex-1 bg-white/5 border border-white/10 p-4 rounded-2xl flex items-center justify-center gap-3 transition-all hover:bg-white/10 active:scale-95"
@@ -135,7 +135,7 @@ export default function MobileMenu({ isOpen, onClose, navLinks }: MobileMenuProp
                 <span className="text-sm font-black">Telegram</span>
               </a>
               <a
-                href="https://x.com/dropx"
+                href="https://x.com/dropxtoken"
                 target="_blank"
                 rel="noreferrer"
                 className="flex-1 bg-white/5 border border-white/10 p-4 rounded-2xl flex items-center justify-center gap-3 transition-all hover:bg-white/10 active:scale-95"
