@@ -30,7 +30,7 @@ export function Navbar() {
     { href: '/airdrop', label: 'Airdrop' },
     { href: '/rewards', label: 'Rewards' },
     { href: '/about', label: 'About' },
-    { href: '/docs', label: 'Docs' },
+    { href: '/DropX_Whitepaper.pdf', label: 'Docs' },
   ];
 
   return (

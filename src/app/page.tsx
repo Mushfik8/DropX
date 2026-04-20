@@ -193,7 +193,7 @@ export default function LandingPage() {
           <p className="text-foreground/50 mb-12 font-medium relative z-10">Explore our technical architecture, tokenomics, and vision for the future.</p>
           
           <div className="flex flex-col sm:flex-row gap-4 justify-center relative z-10">
-            <a href="#" className="flex-1 bg-white/5 hover:bg-white/10 border border-white/10 p-6 rounded-3xl flex flex-col items-center transition-all hover:-translate-y-1 group">
+            <a href="/DropX_Whitepaper.pdf" target="_blank" className="flex-1 bg-white/5 hover:bg-white/10 border border-white/10 p-6 rounded-3xl flex flex-col items-center transition-all hover:-translate-y-1 group">
               <span className="text-4xl mb-4 group-hover:scale-110 transition-transform">📄</span>
               <span className="font-black text-lg text-white mb-1">Whitepaper</span>
               <span className="text-xs text-foreground/40 font-bold uppercase tracking-widest">Technical Guide</span>
