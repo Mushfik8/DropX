@@ -107,20 +107,24 @@ export default function DocsPage() {
   ];
 
   return (
-    <div className="w-full pb-20">
+    <div className="w-full pb-32 bg-mesh min-h-screen">
       {/* Hero Section */}
-      <section className="relative pt-24 pb-16 px-4 overflow-hidden border-b border-card-border/50">
-        <div className="absolute top-0 right-0 w-96 h-96 bg-primary/10 rounded-full blur-[100px] pointer-events-none" />
-        <div className="max-w-4xl mx-auto text-center relative z-10">
-          <div className="inline-block px-4 py-1.5 bg-card border border-card-border rounded-full text-foreground/70 text-sm font-semibold mb-6 uppercase tracking-wider">
-            📖 Documentation
+      <section className="relative pt-32 pb-20 px-4 overflow-hidden">
+        <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-primary/10 rounded-full blur-[120px] pointer-events-none" />
+        
+        <div className="max-w-5xl mx-auto text-center relative z-10">
+          <div className="inline-flex items-center gap-2 px-4 py-2 bg-white/5 border border-white/10 rounded-full mb-8 animate-fade-in-up">
+            <span className="flex h-2 w-2 rounded-full bg-primary animate-pulse shadow-[0_0_8px_rgba(139,92,246,1)]" />
+            <span className="text-xs font-black uppercase tracking-[0.2em] text-foreground/80">Documentation Hub</span>
           </div>
-          <h1 className="text-5xl md:text-6xl font-extrabold mb-6">
-            DropX <br className="hidden md:block" />
-            <span className="text-primary">Documentation</span>
+          
+          <h1 className="text-5xl md:text-8xl font-black mb-8 tracking-tighter leading-[0.9]">
+            <span className="bg-linear-to-b from-white to-white/40 bg-clip-text text-transparent italic">Protocol</span><br />
+            <span className="bg-linear-to-r from-primary via-purple-400 to-secondary bg-clip-text text-transparent glow-text-primary">Guides & Assets</span>
           </h1>
-          <p className="text-xl text-foreground/70 leading-relaxed max-w-3xl mx-auto">
-            Everything you need to know about DropX. Find guides, FAQs, and resources to get the most out of the platform.
+          
+          <p className="text-lg sm:text-xl text-foreground/60 leading-relaxed max-w-2xl mx-auto font-medium">
+            Everything you need to know about the DropX ecosystem, from technical specifications to earning strategies.
           </p>
         </div>
       </section>
@@ -128,81 +132,88 @@ export default function DocsPage() {
       {/* Quick Links / Resources */}
       <section className="py-24 px-4">
         <div className="max-w-6xl mx-auto">
-          <h2 className="text-3xl md:text-4xl font-extrabold mb-16 text-center">
-            Key <span className="text-primary">Resources</span>
-          </h2>
+          <div className="text-center mb-20">
+            <h2 className="text-4xl font-black tracking-tighter uppercase italic">Key <span className="text-primary glow-text-primary">Resources</span></h2>
+          </div>
 
           {/* Official Documents */}
-          <div className="mb-20">
-            <h3 className="text-2xl font-bold mb-8 text-white">Official Documents</h3>
+          <div className="mb-32">
+            <h3 className="text-xs font-black text-foreground/30 uppercase tracking-[0.4em] mb-10 text-center">Official Documents</h3>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
               <a
-                href="https://dropx.io/whitepaper.pdf"
+                href="/DropX_Whitepaper.pdf"
+                download="DropX_Whitepaper.pdf"
                 target="_blank"
                 rel="noreferrer"
-                className="group bg-card border border-card-border p-6 rounded-2xl hover:border-primary transition-all duration-300"
+                className="group glass-card p-10 rounded-[32px] border-white/5 hover:border-primary/40 transition-all duration-500 relative overflow-hidden"
               >
-                <div className="text-4xl mb-4">📘</div>
-                <h4 className="font-bold text-lg text-white mb-2">Whitepaper</h4>
-                <p className="text-foreground/60 text-sm mb-4">
-                  Complete protocol architecture and technical specifications
-                </p>
-                <span className="text-primary font-bold text-sm group-hover:underline">
-                  Download PDF →
-                </span>
+                <div className="absolute top-0 right-0 p-6 text-6xl opacity-5 group-hover:opacity-10 transition-opacity">📄</div>
+                <div className="relative z-10">
+                  <div className="text-4xl mb-6 group-hover:scale-110 transition-transform">📘</div>
+                  <h4 className="font-black text-2xl text-white mb-3 uppercase tracking-tight">Whitepaper</h4>
+                  <p className="text-foreground/40 text-sm font-medium leading-relaxed mb-8">
+                    Complete protocol architecture and technical specifications.
+                  </p>
+                  <div className="flex items-center gap-2 text-primary font-black text-xs uppercase tracking-widest group-hover:gap-4 transition-all">
+                    Download PDF <span className="text-xl">→</span>
+                  </div>
+                </div>
               </a>
 
               <a
-                href="https://dropx.io/pitchdeck.pdf"
-                target="_blank"
-                rel="noreferrer"
-                className="group bg-card border border-card-border p-6 rounded-2xl hover:border-primary transition-all duration-300"
+                href="#"
+                className="group glass-card p-10 rounded-[32px] border-white/5 hover:border-secondary/40 transition-all duration-500 relative overflow-hidden"
               >
-                <div className="text-4xl mb-4">📊</div>
-                <h4 className="font-bold text-lg text-white mb-2">Pitch Deck</h4>
-                <p className="text-foreground/60 text-sm mb-4">
-                  Investor overview, metrics, and growth projections
-                </p>
-                <span className="text-primary font-bold text-sm group-hover:underline">
-                  Download PDF →
-                </span>
+                <div className="absolute top-0 right-0 p-6 text-6xl opacity-5 group-hover:opacity-10 transition-opacity">📊</div>
+                <div className="relative z-10">
+                  <div className="text-4xl mb-6 group-hover:scale-110 transition-transform">📊</div>
+                  <h4 className="font-black text-2xl text-white mb-3 uppercase tracking-tight">Pitch Deck</h4>
+                  <p className="text-foreground/40 text-sm font-medium leading-relaxed mb-8">
+                    Investor overview, metrics, and growth projections.
+                  </p>
+                  <div className="flex items-center gap-2 text-secondary font-black text-xs uppercase tracking-widest group-hover:gap-4 transition-all">
+                    Download PDF <span className="text-xl">→</span>
+                  </div>
+                </div>
               </a>
 
               <a
-                href="https://dropx.io/litepaper.pdf"
-                target="_blank"
-                rel="noreferrer"
-                className="group bg-card border border-card-border p-6 rounded-2xl hover:border-primary transition-all duration-300"
+                href="#"
+                className="group glass-card p-10 rounded-[32px] border-white/5 hover:border-primary/40 transition-all duration-500 relative overflow-hidden"
               >
-                <div className="text-4xl mb-4">📑</div>
-                <h4 className="font-bold text-lg text-white mb-2">Litepaper</h4>
-                <p className="text-foreground/60 text-sm mb-4">
-                  Quick executive summary and key points
-                </p>
-                <span className="text-primary font-bold text-sm group-hover:underline">
-                  Download PDF →
-                </span>
+                <div className="absolute top-0 right-0 p-6 text-6xl opacity-5 group-hover:opacity-10 transition-opacity">📑</div>
+                <div className="relative z-10">
+                  <div className="text-4xl mb-6 group-hover:scale-110 transition-transform">📑</div>
+                  <h4 className="font-black text-2xl text-white mb-3 uppercase tracking-tight">Litepaper</h4>
+                  <p className="text-foreground/40 text-sm font-medium leading-relaxed mb-8">
+                    Quick executive summary and key points for fast reading.
+                  </p>
+                  <div className="flex items-center gap-2 text-primary font-black text-xs uppercase tracking-widest group-hover:gap-4 transition-all">
+                    Download PDF <span className="text-xl">→</span>
+                  </div>
+                </div>
               </a>
             </div>
           </div>
 
           {/* Documentation Topics */}
           <div>
-            <h3 className="text-2xl font-bold mb-8 text-white">Documentation Topics</h3>
+            <h3 className="text-xs font-black text-foreground/30 uppercase tracking-[0.4em] mb-10 text-center">Documentation Topics</h3>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
               {docs.map((section, idx) => (
-                <div key={idx} className="bg-card/50 border border-card-border p-6 rounded-2xl">
-                  <h4 className="text-xl font-bold text-white mb-6 flex items-center gap-2">
-                    <span className="text-2xl">{section.items[0]?.icon}</span>
+                <div key={idx} className="glass-card p-10 rounded-[40px] border-white/5 relative overflow-hidden group">
+                  <div className="absolute top-0 right-0 p-8 text-7xl opacity-[0.03] group-hover:opacity-[0.05] transition-opacity">{section.items[0]?.icon}</div>
+                  <h4 className="text-2xl font-black text-white mb-10 flex items-center gap-4 uppercase tracking-tighter italic">
+                    <span className="w-8 h-1 bg-primary rounded-full" />
                     {section.category}
                   </h4>
-                  <ul className="space-y-4">
+                  <ul className="space-y-6">
                     {section.items.map((item, itemIdx) => (
-                      <li key={itemIdx} className="flex items-start gap-3">
-                        <span className="text-primary text-xl shrink-0 mt-0.5">•</span>
+                      <li key={itemIdx} className="flex items-start gap-4 group/item">
+                        <span className="text-primary text-xl shrink-0 mt-0.5 group-hover/item:scale-125 transition-transform">•</span>
                         <div className="flex-1">
-                          <p className="font-bold text-white text-sm">{item.title}</p>
-                          <p className="text-foreground/60 text-xs mt-1">{item.description}</p>
+                          <p className="font-black text-white text-sm uppercase tracking-tight">{item.title}</p>
+                          <p className="text-foreground/40 text-xs mt-1 font-medium leading-relaxed">{item.description}</p>
                         </div>
                       </li>
                     ))}
@@ -215,63 +226,47 @@ export default function DocsPage() {
       </section>
 
       {/* Legal & Policies */}
-      <section className="py-20 px-4 bg-card/30 border-y border-card-border/50">
-        <div className="max-w-4xl mx-auto">
-          <h2 className="text-3xl font-bold mb-12 text-center text-white">Legal & <span className="text-primary">Policies</span></h2>
+      <section className="py-24 px-4 relative">
+        <div className="absolute inset-0 bg-primary/5 -skew-y-3 scale-110 pointer-events-none" />
+        <div className="max-w-4xl mx-auto relative z-10">
+          <h2 className="text-4xl font-black mb-16 text-center text-white tracking-tighter uppercase italic">Legal & <span className="text-primary glow-text-primary">Policies</span></h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <Link
-              href="/terms"
-              className="group bg-card border border-card-border p-6 rounded-2xl hover:border-primary transition-all"
-            >
-              <div className="text-4xl mb-4">📋</div>
-              <h4 className="font-bold text-lg text-white mb-2">Terms & Conditions</h4>
-              <p className="text-foreground/60 text-sm">
-                Platform usage terms and conditions for all users
-              </p>
-              <span className="text-primary font-bold text-sm mt-4 inline-block group-hover:underline">
-                Read more →
-              </span>
-            </Link>
-
-            <Link
-              href="/privacy"
-              className="group bg-card border border-card-border p-6 rounded-2xl hover:border-primary transition-all"
-            >
-              <div className="text-4xl mb-4">🔒</div>
-              <h4 className="font-bold text-lg text-white mb-2">Privacy Policy</h4>
-              <p className="text-foreground/60 text-sm">
-                How we collect, use, and protect your personal data
-              </p>
-              <span className="text-primary font-bold text-sm mt-4 inline-block group-hover:underline">
-                Read more →
-              </span>
-            </Link>
-
-            <Link
-              href="/risk"
-              className="group bg-card border border-card-border p-6 rounded-2xl hover:border-primary transition-all"
-            >
-              <div className="text-4xl mb-4">⚠️</div>
-              <h4 className="font-bold text-lg text-white mb-2">Risk Disclosure</h4>
-              <p className="text-foreground/60 text-sm">
-                Important information about potential risks in using DropX
-              </p>
-              <span className="text-primary font-bold text-sm mt-4 inline-block group-hover:underline">
-                Read more →
-              </span>
-            </Link>
+            {[
+              { href: "/terms", title: "Terms of Service", desc: "Platform usage terms and conditions for all users.", icon: "📋" },
+              { href: "/privacy", title: "Privacy Policy", desc: "How we collect, use, and protect your personal data.", icon: "🔒" },
+              { href: "/risk", title: "Risk Disclosure", desc: "Important information about potential risks in using DropX.", icon: "⚠️" },
+            ].map((item, i) => (
+              <Link
+                key={i}
+                href={item.href}
+                className="group glass-card p-8 rounded-3xl border-white/5 hover:border-primary/40 transition-all flex flex-col justify-between"
+              >
+                <div>
+                  <div className="text-4xl mb-6 group-hover:scale-110 transition-transform">{item.icon}</div>
+                  <h4 className="font-black text-xl text-white mb-3 uppercase tracking-tight">{item.title}</h4>
+                  <p className="text-foreground/40 text-sm font-medium leading-relaxed">
+                    {item.desc}
+                  </p>
+                </div>
+                <span className="text-primary font-black text-xs uppercase tracking-widest mt-8 group-hover:gap-2 flex items-center transition-all">
+                  Read more <span className="ml-1">→</span>
+                </span>
+              </Link>
+            ))}
 
             <a
               href="mailto:contact@dropx.io"
-              className="group bg-card border border-card-border p-6 rounded-2xl hover:border-primary transition-all"
+              className="group glass-card p-8 rounded-3xl border-white/5 hover:border-secondary/40 transition-all flex flex-col justify-between"
             >
-              <div className="text-4xl mb-4">✉️</div>
-              <h4 className="font-bold text-lg text-white mb-2">Contact Support</h4>
-              <p className="text-foreground/60 text-sm">
-                Get in touch with our team for inquiries and support
-              </p>
-              <span className="text-primary font-bold text-sm mt-4 inline-block group-hover:underline">
-                Email us →
+              <div>
+                <div className="text-4xl mb-6 group-hover:scale-110 transition-transform">✉️</div>
+                <h4 className="font-black text-xl text-white mb-3 uppercase tracking-tight">Contact Support</h4>
+                <p className="text-foreground/40 text-sm font-medium leading-relaxed">
+                  Get in touch with our team for inquiries and support.
+                </p>
+              </div>
+              <span className="text-secondary font-black text-xs uppercase tracking-widest mt-8 group-hover:gap-2 flex items-center transition-all">
+                Email us <span className="ml-1">→</span>
               </span>
             </a>
           </div>
@@ -279,11 +274,13 @@ export default function DocsPage() {
       </section>
 
       {/* FAQ Section */}
-      <section className="py-20 px-4">
+      <section className="py-24 px-4">
         <div className="max-w-4xl mx-auto">
-          <h2 className="text-3xl md:text-4xl font-extrabold mb-12 text-center">
-            Frequently Asked <span className="text-primary">Questions</span>
-          </h2>
+          <div className="text-center mb-16">
+            <h2 className="text-4xl sm:text-6xl font-black tracking-tighter mb-4 italic uppercase">FAQ</h2>
+            <p className="text-foreground/40 font-medium uppercase tracking-widest text-xs">Everything you need to know about getting started</p>
+          </div>
+          
           <div className="space-y-4">
             {[
               {
@@ -301,49 +298,41 @@ export default function DocsPage() {
               {
                 q: "What wallets are supported?",
                 a: "We support all major Ethereum-compatible wallets including MetaMask, Trust Wallet, and others that work with Web3."
-              },
-              {
-                q: "Can I withdraw my rewards?",
-                a: "Yes, once $DPX is launched, you can transfer your tokens to your connected wallet and use them freely."
-              },
-              {
-                q: "Is there a minimum amount to join?",
-                a: "No! DropX is completely free to join. You just need a Web3 wallet to get started."
               }
             ].map((faq, idx) => (
-              <details
-                key={idx}
-                className="group bg-card border border-card-border rounded-2xl p-6 cursor-pointer transition-all hover:border-primary/50"
-              >
-                <summary className="flex items-center justify-between font-bold text-white text-lg">
-                  {faq.q}
-                  <span className="text-primary text-xl group-open:rotate-180 transition-transform">
-                    ▼
-                  </span>
-                </summary>
-                <p className="text-foreground/70 mt-4 text-sm leading-relaxed">{faq.a}</p>
-              </details>
+              <div key={idx} className="glass-card rounded-3xl border-white/5 overflow-hidden group">
+                <div className="p-8">
+                  <h4 className="font-black text-white text-lg tracking-tight mb-4 flex items-center gap-3">
+                    <span className="w-1.5 h-1.5 rounded-full bg-primary" />
+                    {faq.q}
+                  </h4>
+                  <p className="text-foreground/40 text-sm leading-relaxed font-medium pl-4.5 border-l border-white/5">
+                    {faq.a}
+                  </p>
+                </div>
+              </div>
             ))}
           </div>
         </div>
       </section>
 
       {/* CTA Section */}
-      <section className="py-20 px-4 bg-primary/5 border-y border-primary/20">
-        <div className="max-w-4xl mx-auto text-center">
-          <h2 className="text-3xl md:text-4xl font-bold mb-6 text-white">
-            Ready to Start <span className="text-primary">Earning?</span>
+      <section className="py-32 px-4 relative text-center">
+        <div className="max-w-4xl mx-auto relative z-10">
+          <h2 className="text-5xl md:text-7xl font-black mb-10 text-white tracking-tighter leading-tight uppercase italic">
+            Ready to Start <br /><span className="text-primary glow-text-primary">Earning?</span>
           </h2>
-          <p className="text-lg text-foreground/70 mb-8 max-w-2xl mx-auto">
-            Head back to the rewards page and complete your first task today.
+          <p className="text-lg text-foreground/50 mb-12 max-w-2xl mx-auto font-medium leading-relaxed">
+            Head back to the rewards hub and complete your first task today. The ecosystem is waiting for you.
           </p>
           <Link
             href="/rewards"
-            className="inline-block bg-primary hover:bg-primary/90 text-black px-8 py-4 rounded-xl font-bold transition-all duration-300 hover:shadow-[0_0_20px_rgba(250,204,21,0.3)]"
+            className="inline-block bg-linear-to-r from-primary to-purple-600 text-white px-12 py-5 rounded-2xl font-black text-xl transition-all shadow-2xl shadow-primary/20 hover:scale-105 active:scale-95"
           >
-            Start Earning →
+            Go to Rewards Hub →
           </Link>
         </div>
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[60%] h-[60%] bg-primary/5 rounded-full blur-[120px] pointer-events-none" />
       </section>
     </div>
   );
