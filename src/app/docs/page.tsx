@@ -161,7 +161,10 @@ export default function DocsPage() {
               </a>
 
               <a
-                href="#"
+                href="/Pitch_Deck_DropX.pdf"
+                download="Pitch_Deck_DropX.pdf"
+                target="_blank"
+                rel="noreferrer"
                 className="group glass-card p-10 rounded-[32px] border-white/5 hover:border-secondary/40 transition-all duration-500 relative overflow-hidden"
               >
                 <div className="absolute top-0 right-0 p-6 text-6xl opacity-5 group-hover:opacity-10 transition-opacity">📊</div>
